@@ -1,12 +1,47 @@
-pipeline {
+@Library('ganesh-shared-library')_
+pipeline{
     agent any
-
-    stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
+    stages{
+        stage('checkout'){
+            steps{
+                gitCheckout(branch:'main',url:'https://github.com/buildpacks/sample-java-app.git')
             }
         }
-    }
-}
+        stage("Read"){
+          steps{
+                readFile 'README.md'
+            }
+        }
+        stage('mavenbuild'){
+            tools{
+                maven 'maven3'
+                }
+            steps{
+                     sh 'mvn clean package'
+                 
+            }
+        }
+        
+        stage('dockerimagebuild'){
+          steps{
+               sh 'docker build -f ../Dockerfile -t tomcat:latest .'
+          
+              }
+        }
+        stage('dockerruncontainer'){
+            steps{
+             sh "docker run -it -d --name tomcatwebapp -p 9090:8080 tomcat:latest"
+
+              }
+             }
+           }
+          }
+        
+        
+        
+        
+        
+            
+     
+
 
