@@ -17,14 +17,18 @@ pipeline{
                 maven 'maven3'
                 }
             steps{
+                    dir('sample-java-app'){
                      sh 'mvn clean package'
+                     }
                  
             }
         }
         
         stage('dockerimagebuild'){
           steps{
+              dir('sample-java-app'){
                sh 'docker build -f ../Dockerfile -t tomcat:latest .'
+                 }
           
               }
         }
