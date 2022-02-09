@@ -17,9 +17,9 @@ pipeline{
                 maven 'maven3'
                 }
             steps{
-                    dir('sample-java-app2'){
+                    
                      sh 'mvn clean package'
-                     }
+                     
                  
             }
         }
