@@ -17,7 +17,7 @@ pipeline{
                 maven 'maven3'
                 }
             steps{
-                    dir('sample-java-app'){
+                    dir('sample-java-app2'){
                      sh 'mvn clean package'
                      }
                  
@@ -26,7 +26,7 @@ pipeline{
         
         stage('dockerimagebuild'){
           steps{
-              dir('sample-java-app'){
+              dir('sample-java-app2'){
                sh 'docker build -f ../Dockerfile -t tomcat:latest .'
                  }
           
